@@ -1,33 +1,18 @@
 #include <stdio.h>
 #include "stack.h"
 
+void printInt(void* value){
+    printf("%d", ((int*)value));
+}
 int main() {
     Stack* stack = createStack();
 
-    int a = 1;
-    char b = 'A';
-    float c = 3.14f;
-
-    push(stack, &a);
-    push(stack, &b);
-    push(stack, &c);
-
+    push(stack, (int*)1);
+    push(stack, (int*)2);
+    push(stack, (int*)3);
+    push(stack, (char*)'A');
     resize(stack);
-
-    while (!isEmpty(stack)) {
-        void* value = top(stack);
-
-        if (value != NULL) {
-            if (value == &a) {
-                printf("%d ", *((int*)value));
-            } else if (value == &b) {
-                printf("%c ", *((char*)value));
-            } else if (value == &c) {
-                printf("%.2f ", *((float*)value));
-            }
-        }
-        pop(stack);
-    }
+    toString(stack,printInt);
     printf("\n");
     destroy(stack);
     return 0;
