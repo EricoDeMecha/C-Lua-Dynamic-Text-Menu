@@ -22,6 +22,7 @@ void push(Stack* stack, void* value);
 void* pop(Stack* stack);
 void* top(Stack* stack);
 void resize(Stack* stack);
+void clear(Stack* stack);
 void toString(Stack* stack, void(*printFunc)(void*));
 
 #endif //TEST_STACK_H

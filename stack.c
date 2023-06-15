@@ -58,6 +58,9 @@ void resize(Stack* stack) {
     stack->capacity = newCapacity;
 }
 
+void clear(Stack* stack){
+    stack->top = -1;
+}
 void toString(Stack* stack, void(*printFunc)(void*)){
     if(stack==NULL){
         printf("NULL");
