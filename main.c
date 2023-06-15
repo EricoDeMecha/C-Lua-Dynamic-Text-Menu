@@ -1,17 +1,9 @@
 #include <stdio.h>
 #include "stack.h"
 #include "pair.h"
+#include "utils.h"
+#include "MinimumStack/minstack.h"
 
-void printInt(void* value){
-    printf("%d", ((int*)value));
-}
-void printChar(void* value){
-    printf("%c", (char*)value);
-}
-void printPairInts(void* value){
-    Pair* temp = (Pair*)value;
-    printf("{%d, %d}", (int*)temp->first, (int*)temp->second);
-}
 int main() {
     Stack* stack = createStack();
 
@@ -35,5 +27,20 @@ int main() {
     clear(stack);
 
     destroy(stack);
+
+    MinStack* minStack = F(createStack)();
+    F(push)(minStack, (int*)2);
+    F(push)(minStack, (int*)4);
+    F(push)(minStack, (int*)3);
+    F(push)(minStack, (int*)5);
+    F(push)(minStack, (int*)6);
+    F(push)(minStack, (int*)7);
+    F(push)(minStack, (int*)8);
+    F(push)(minStack, (int*)31);
+    F(push)(minStack, (int*)34);
+    F(push)(minStack, (int*)54);
+    F(push)(minStack, (int*)74);
+    F(push)(minStack, (int*)44);
+    F(push)(minStack, (int*)35);
     return 0;
 }
