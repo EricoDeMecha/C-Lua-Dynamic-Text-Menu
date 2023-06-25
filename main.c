@@ -1,11 +1,10 @@
 #include <stdio.h>
-#include "stack.h"
-#include "pair.h"
 #include "utils.h"
-#include "MinimumStack/minstack.h"
+
+
 
 int main() {
-    Stack* stack = createStack();
+    Stack* stack = create(Stack);
 
     push(stack, (int*)1);
     push(stack, (int*)2);
@@ -28,23 +27,23 @@ int main() {
 
     destroy(stack);
 
-    MinStack* minStack = F(createStack)();
-    F(push)(minStack, (int*)2);
-    F(push)(minStack, (int*)4);
-    F(push)(minStack, (int*)3);
-    F(push)(minStack, (int*)5);
-    F(push)(minStack, (int*)6);
-    F(push)(minStack, (int*)7);
-    F(push)(minStack, (int*)8);
-    F(push)(minStack, (int*)31);
-    F(push)(minStack, (int*)34);
-    F(push)(minStack, (int*)54);
-    F(push)(minStack, (int*)74);
-    F(push)(minStack, (int*)44);
-    F(push)(minStack, (int*)35);
+    MinStack* minStack = create(MinStack);
+    push(minStack, (int*)2);
+    push(minStack, (int*)4);
+    push(minStack, (int*)3);
+    push(minStack, (int*)5);
+    push(minStack, (int*)6);
+    push(minStack, (int*)7);
+    push(minStack, (int*)8);
+    push(minStack, (int*)31);
+    push(minStack, (int*)34);
+    push(minStack, (int*)54);
+    push(minStack, (int*)74);
+    push(minStack, (int*)44);
+    push(minStack, (int*)35);
+    toString(minStack, printPairInts);
     // print minimum
-    void* min = F(top)(minStack)->second;
-
-    printInt(min);
+    void* min = top(minStack)->second;
+    printf("MinStack minimum: %d\n", (int*)min);
     return 0;
 }

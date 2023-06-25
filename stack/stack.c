@@ -11,15 +11,15 @@ Stack* createStack(){
     stack->capacity = 0;
     return stack;
 }
-void destroy(Stack* stack){
+void destroyStack(Stack* stack){
     free(stack->data);
     free(stack);
 }
-bool isEmpty(Stack* stack){
+bool isStackEmpty(Stack* stack){
     if(stack == NULL) return true;
     return stack->top == -1;
 }
-void push(Stack* stack, void* value){
+void pushStack(Stack* stack, void* value){
     if(stack == NULL) return;
     if (stack->top == stack->capacity - 1) {
         stack->capacity = stack->capacity == 0 ? 1 : stack->capacity * 2;// double the storage
@@ -32,21 +32,21 @@ void push(Stack* stack, void* value){
     }
     stack->data[++stack->top] = value;
 }
-void* pop(Stack* stack){
-    if(isEmpty(stack)){
+void* popStack(Stack* stack){
+    if(isStackEmpty(stack)){
         printf("Stack underflow\n");
         return NULL;
     }
     return stack->data[--stack->top];
 }
-void* top(Stack* stack){
-    if(isEmpty(stack)){
+void* topStack(Stack* stack){
+    if(isStackEmpty(stack)){
         printf("Stack is empty\n");
         return NULL;
     }
     return stack->data[stack->top];
 }
-void resize(Stack* stack) {
+void resizeStack(Stack* stack) {
     if(stack==NULL) return;
     int newCapacity = stack->top + 1;
     void** resizedData = (void**)realloc(stack->data, newCapacity * sizeof(void*));
@@ -58,10 +58,10 @@ void resize(Stack* stack) {
     stack->capacity = newCapacity;
 }
 
-void clear(Stack* stack){
+void clearStack(Stack* stack){
     stack->top = -1;
 }
-void toString(Stack* stack, void(*printFunc)(void*)){
+void toStringStack(Stack* stack, void(*printFunc)(void*)){
     if(stack==NULL){
         printf("NULL");
         return;

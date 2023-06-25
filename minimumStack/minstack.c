@@ -3,7 +3,7 @@
 //
 #include "minstack.h"
 
-MinStack* F(createStack)(){
+MinStack* createMinStack(){
     MinStack* stack = (MinStack*) malloc(sizeof(MinStack));
     if(stack != NULL){
         stack->data = NULL;
@@ -12,17 +12,17 @@ MinStack* F(createStack)(){
     }
     return stack;
 }
-void F(destroy)(MinStack* stack){
+void destroyMinStack(MinStack* stack){
     free(stack->data);
     free(stack);
 }
-bool F(isEmpty)(MinStack* stack){
+bool isMinStackEmpty(MinStack* stack){
     if(stack == NULL) return true;
     return stack->top == -1;
 }
-void F(push)(MinStack* stack, void* value){
+void pushMinStack(MinStack* stack, void* value){
     if(stack == NULL) return;
-    void* newMin = F(isEmpty)(stack)? value : MIN(value, F(top)(stack)->second);
+    void* newMin = isMinStackEmpty(stack)? value : MIN(value, topMinStack(stack)->second);
     if(stack->top == stack->capacity - 1){
         stack->capacity = stack->capacity == 0 ? 1 : stack->capacity * 2;// double the storage
         Pair* temp = (Pair*)realloc(stack->data, stack->capacity * sizeof(Pair));
@@ -34,24 +34,24 @@ void F(push)(MinStack* stack, void* value){
     }
     stack->data[++stack->top] = *makePair(value, newMin);
 }
-Pair* F(pop)(MinStack* stack){
-    if(F(isEmpty)(stack)){
+Pair* popMinStack(MinStack* stack){
+    if(isMinStackEmpty(stack)){
         printf("Stack underflow\n");
         return NULL;
     }
     return &stack->data[--stack->top];
 }
-Pair* F(top)(MinStack* stack){
-    if(F(isEmpty)(stack)){
+Pair* topMinStack(MinStack* stack){
+    if(isMinStackEmpty(stack)){
         printf("Stack is empty\n");
         return NULL;
     }
     return &stack->data[stack->top];
 }
-void F(clear)(MinStack* stack){
+void clearMinStack(MinStack* stack){
     stack->top = -1;
 }
-void F(toString)(MinStack* stack, void(*printFunc)(void*)){
+void toStringMinStack(MinStack* stack, void(*printFunc)(void*)){
     if(stack==NULL){
         printf("NULL");
         return;

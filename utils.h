@@ -6,12 +6,49 @@
 #define TEST_UTILS_H
 
 #include <stdio.h>
-#include "pair.h"
+#include "pair/pair.h"
+#include "minimumStack/minstack.h"
+#include "stack/stack.h"
 
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
-#define F(fcn) f1_##fcn
+#define create(type) _Generic((type){}, \
+    Stack: createStack(), \
+    MinStack: createMinStack() \
+)
+#define destroy(stack) _Generic((stack), \
+    Stack*: destroyStack, \
+    MinStack*: destroyMinStack \
+)(stack)
 
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define isEmpty(stack) _Generic((stack), \
+    Stack*: isStackEmpty, \
+    MinStack*: isMinStackEmpty \
+)(stack)
+
+#define push(stack, value) _Generic((stack), \
+    Stack*: pushStack, \
+    MinStack*: pushMinStack \
+)(stack, value)
+
+#define pop(stack) _Generic((stack), \
+    Stack*: popStack, \
+    MinStack*: popMinStack \
+)(stack)
+
+#define top(stack) _Generic((stack), \
+    Stack*: topStack, \
+    MinStack*: topMinStack \
+)(stack)
+
+#define clear(stack) _Generic((stack), \
+    Stack*: clearStack, \
+    MinStack*: clearMinStack \
+)(stack)
+
+#define toString(stack, printFunc) _Generic((stack), \
+    Stack*: toStringStack, \
+    MinStack*: toStringMinStack \
+)(stack, printFunc)
+
 
 void printInt(void* value);
 void printChar(void* value);
