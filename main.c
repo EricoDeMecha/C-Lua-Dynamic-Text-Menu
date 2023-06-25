@@ -42,5 +42,9 @@ int main() {
     F(push)(minStack, (int*)74);
     F(push)(minStack, (int*)44);
     F(push)(minStack, (int*)35);
+    // print minimum
+    void* min = F(top)(minStack)->second;
+
+    printInt(min);
     return 0;
 }

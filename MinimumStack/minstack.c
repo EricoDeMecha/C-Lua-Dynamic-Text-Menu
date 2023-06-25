@@ -25,12 +25,12 @@ void F(push)(MinStack* stack, void* value){
     void* newMin = F(isEmpty)(stack)? value : MIN(value, F(top)(stack)->second);
     if(stack->top == stack->capacity - 1){
         stack->capacity = stack->capacity == 0 ? 1 : stack->capacity * 2;// double the storage
-        Pair** temp = (Pair**)realloc(stack->data, stack->capacity * sizeof(Pair*));
+        Pair* temp = (Pair*)realloc(stack->data, stack->capacity * sizeof(Pair));
         if(temp == NULL){
             printf("Failed to reallocate storage\n");
             return;
         }
-        stack->data = *temp;
+        stack->data = temp;
     }
     stack->data[++stack->top] = *makePair(value, newMin);
 }
