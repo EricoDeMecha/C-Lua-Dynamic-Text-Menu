@@ -32,7 +32,8 @@ void pushMinStack(MinStack* stack, void* value){
         }
         stack->data = temp;
     }
-    stack->data[++stack->top] = *makePair(value, newMin);
+    Pair* newPair = makePair(value, newMin);
+    stack->data[++stack->top] = *newPair;
 }
 Pair* popMinStack(MinStack* stack){
     if(isMinStackEmpty(stack)){
