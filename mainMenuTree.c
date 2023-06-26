@@ -141,6 +141,13 @@ int main() {
     } else {
         printf("Menu item not found.\n");
     }
+    /* TODO
+     * - load a program from the selected menu item
+     *  * - Dynamic Loading or
+     *  * - Loading a python script or
+     *  * - Loading a lua script
+     *  */
+
     // Close the database and free memory
     sqlite3_close(db);
     destroyMenuTree(menuTree);
