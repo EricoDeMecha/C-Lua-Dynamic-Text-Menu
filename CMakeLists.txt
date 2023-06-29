@@ -31,7 +31,9 @@ endif()
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 
 # works with conan version 1.59.0
-conan_cmake_configure(REQUIRES sqlite3/3.40.0
+conan_cmake_configure(REQUIRES
+        sqlite3/3.40.0
+        lua/5.4.4
         GENERATORS cmake_find_package)
 
 conan_cmake_autodetect(settings)
@@ -52,6 +54,13 @@ if(SQLite3_FOUND)
     include_directories(${SQLite3_INCLUDE_DIRS})
     target_link_libraries(menuTree PRIVATE ${SQLite3_LIBRARIES})
 endif ()
+
+find_package(lua REQUIRED)
+if(lua_FOUND)
+    message("Lua 51 Found")
+    include_directories(${lua_INCLUDE_DIRS})
+    target_link_libraries(menuTree PRIVATE ${lua_LIBRARIES})
+endif()
 
 
 
