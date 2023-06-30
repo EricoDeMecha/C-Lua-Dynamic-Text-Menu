@@ -44,8 +44,12 @@ conan_cmake_install(PATH_OR_REFERENCE .
         SETTINGS ${settings})
 
 add_executable(menuTree
+        utils.h
+        utils.c
         menuTree/menuTree.h
-        menuTree/menuTree.c mainMenuTree.c)
+        menuTree/menuTree.c
+        mainMenuTree.c
+        )
 set_target_properties(menuTree PROPERTIES LINKER_LANGUAGE C)
 
 find_package(SQLite3 REQUIRED)

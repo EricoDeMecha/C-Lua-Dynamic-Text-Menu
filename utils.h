@@ -6,9 +6,16 @@
 #define TEST_UTILS_H
 
 #include <stdio.h>
+#include <string.h>
 #include "pair/pair.h"
 #include "minimumStack/minstack.h"
 #include "stack/stack.h"
+
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
 
 #define create(type) _Generic((type){}, \
     Stack: createStack(), \
@@ -55,5 +62,6 @@ void printChar(void* value);
 void printPairInts(void* value);
 void printPairFloats(void* value);
 void printPairChars(void* value);
-
+char* concatenateStrings(const char* str1, const char* str2);
+char* normalize_path(const char* path);
 #endif //TEST_UTILS_H

@@ -176,6 +176,7 @@ void navigateMenu(MenuTree *menuTree) {
                         previousMenu = currentMenu;
                         currentMenu = child;
                     }
+                    printMenuItem(currentMenu);// print current menu
                 } else if (selectedOption == childOptionCount + 1) {
                     previousMenu = NULL;
                     break;
@@ -289,6 +290,9 @@ MenuItem *findMenuItemByLabelHelper(MenuItem *menuItem, const char *label) {
 
 MenuItem *findMenuItemByLabel(MenuTree *menuTree, const char *label) {
     return findMenuItemByLabelHelper(menuTree->root, label);
+}
+void printMenuItem(MenuItem* item){
+    printf("Menu Item: ID: %d, Label: %s, Program: %s\n", item->id, item->label, item->program);
 }
 
 

@@ -2,10 +2,14 @@
 // Created by koech on 6/26/2023.
 //
 
-#include "menuTree/menuTree.h"
 #include <sqlite3.h>
 #include <time.h>
-
+#include <lua.h>
+#include <lualib.h>
+#include <luaconf.h>
+#include <lauxlib.h>
+#include "menuTree/menuTree.h"
+#include "utils.h"
 
 void populateDatabaseWithRandomMenu(sqlite3* db, int numItems) {
     // Create the menu_items table
@@ -91,13 +95,12 @@ int main() {
     sqlite3 *db;
     char *errMsg = 0;
 
-    // Open the database
     int rc = sqlite3_open("file.db", &db);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
         return rc;
     }
-    populateDatabaseWithRandomMenu(db, 30);
+//    populateDatabaseWithRandomMenu(db, 30);
    /**************************CREATE TABLE*****************************************/
     // Create the menu_items table
     const char *sql = "CREATE TABLE IF NOT EXISTS menu_items (id INT PRIMARY KEY, label TEXT, program TEXT, parent_id INT)";
@@ -114,7 +117,8 @@ int main() {
           "(1, 'Menu 1', 'program1', 0), "
           "(2, 'Submenu 1.1', 'program2', 1), "
           "(3, 'Submenu 1.2', 'program3', 1), "
-          "(4, 'Menu 2', 'program4', 0)";
+          "(4, 'Menu 2', 'program4', 0)"
+          ;
     rc = sqlite3_exec(db, sql, NULL, 0, &errMsg);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", errMsg);
@@ -127,7 +131,7 @@ int main() {
     /***************************LOAD TABLE******************************************/
 
     // Create the menu tree
-    MenuTree* menuTree = createMenuTree("Main Menu");
+    MenuTree* menuTree = createMenuTree("Menu");
 
     // Load menu items from the database into the menu tree
     loadMenuTree(menuTree, db);
@@ -138,12 +142,30 @@ int main() {
     navigateMenu(menuTree);
 
     // find menu item
-    MenuItem* foundItem = findMenuItem(menuTree, 3);
+    MenuItem* foundItem = findMenuItem(menuTree, 1);
     if (foundItem != NULL) {
         printf("Found menu item: ID: %d, Label: %s, Program: %s\n", foundItem->id, foundItem->label, foundItem->program);
     } else {
         printf("Menu item not found.\n");
     }
+    // execute a lua script for the selected program
+    lua_State *L = luaL_newstate();
+
+    // Load Lua libraries
+    luaL_openlibs(L);
+
+    char* temp_script_path = concatenateStrings("../luas/",concatenateStrings(foundItem->program, ".lua"));
+    char* script_path = normalize_path(temp_script_path);
+    // Load and execute a Lua script
+    if (luaL_dofile(L, script_path) != LUA_OK) {
+        printf("Failed to load and execute Lua script: %s\n", lua_tostring(L, -1));
+        lua_close(L);
+        return 1;
+    }
+
+    // Clean up Lua state
+    lua_close(L);
+
     /* TODO
      * - load a program from the selected menu item
      *  * - Dynamic Loading or
@@ -151,9 +173,10 @@ int main() {
      *  * - Loading a lua script
      *  */
 
+    /***************************END LOAD TABLE******************************************/
+
     // Close the database and free memory
     sqlite3_close(db);
     destroyMenuTree(menuTree);
-    /***************************END LOAD TABLE******************************************/
     return 0;
 }

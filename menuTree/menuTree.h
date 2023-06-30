@@ -32,5 +32,5 @@ void navigateMenu(MenuTree* menuTree);
 void addMenuItemByLabel(MenuTree* menuTree, int id, const char* label, const char* program, const char* parentLabel);
 MenuItem* findMenuItemByLabelHelper(MenuItem* menuItem, const char* label);
 MenuItem* findMenuItemByLabel(MenuTree* menuTree, const char* label);
-
+void printMenuItem(MenuItem* item);
 #endif //TEST_MENUTREE_H
