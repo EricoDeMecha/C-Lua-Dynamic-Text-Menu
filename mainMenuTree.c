@@ -92,13 +92,13 @@ int main() {
     char *errMsg = 0;
 
     // Open the database
-    int rc = sqlite3_open("file1.db", &db);
+    int rc = sqlite3_open("file.db", &db);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
         return rc;
     }
     populateDatabaseWithRandomMenu(db, 30);
-  /*  *//***************************CREATE TABLE******************************************//*
+   /**************************CREATE TABLE*****************************************/
     // Create the menu_items table
     const char *sql = "CREATE TABLE IF NOT EXISTS menu_items (id INT PRIMARY KEY, label TEXT, program TEXT, parent_id INT)";
     rc = sqlite3_exec(db, sql, NULL, 0, &errMsg);
@@ -122,18 +122,20 @@ int main() {
     } else {
         printf("Menu items inserted successfully.\n");
     }
-   *//***************************END CREATE TABLE******************************************/
+   /***************************END CREATE TABLE******************************************/
 
     /***************************LOAD TABLE******************************************/
 
     // Create the menu tree
-    MenuTree* menuTree = createMenuTree();
+    MenuTree* menuTree = createMenuTree("Main Menu");
 
     // Load menu items from the database into the menu tree
     loadMenuTree(menuTree, db);
 
     // Traverse the menu tree to verify the loaded menu items
     traverseMenu(menuTree);
+    // navigate menu manually
+    navigateMenu(menuTree);
 
     // find menu item
     MenuItem* foundItem = findMenuItem(menuTree, 3);
