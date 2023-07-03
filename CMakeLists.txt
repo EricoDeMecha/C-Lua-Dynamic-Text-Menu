@@ -49,7 +49,9 @@ add_executable(menuTree
         menuTree/menuTree.h
         menuTree/menuTree.c
         mainMenuTree.c
-        luaUtils/luautils.c luaUtils/luautils.h luaUtils/utilswrapper.h)
+        luaUtils/luawrapper.c
+        luaUtils/luawrapper.h
+        )
 set_target_properties(menuTree PROPERTIES LINKER_LANGUAGE C)
 
 find_package(SQLite3 REQUIRED)
